@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Donde comer?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>* {
+  box-sizing: border-box;
+}
+
+:root {
+  --green: #004b3f;
+  --green-2: #0f6b5c;
+  --cream: #fff8ef;
+  --card: #ffffff;
+  --text: #171717;
+  --muted: #6b7280;
+  --line: #e7e1d8;
+  --shadow: 0 18px 45px rgba(0, 44, 37, 0.13);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background:
+    radial-gradient(circle at top left, #ffe0e0 0, transparent 32%),
+    radial-gradient(circle at bottom right, #d6fff4 0, transparent 34%),
+    var(--cream);
+  color: var(--text);
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.app {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 22px 16px 40px;
+}
+
+.hero {
+  min-height: 330px;
+  border-radius: 34px;
+  padding: 34px 24px;
+  --hero-image: url("https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1300&q=80");
+  background:
+    linear-gradient(135deg, rgba(0,75,63,.94), rgba(15,107,92,.88)),
+    var(--hero-image);
+  background-size: cover;
+  background-position: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  position: relative;
+}
+
+.hero::after {
+  content: "🍕 🍣 🥞 🍔";
+  position: absolute;
+  right: 18px;
+  bottom: 16px;
+  font-size: clamp(28px, 6vw, 58px);
+  opacity: .25;
+  transform: rotate(-8deg);
+}
+
+.hero.plan-selected::after {
+  content: "💚 Plan elegido";
+  opacity: .18;
+  font-weight: 800;
+  font-size: clamp(32px, 6vw, 64px);
+}
+
+.badge {
+  width: fit-content;
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.25);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  backdrop-filter: blur(10px);
+}
+
+h1 {
+  margin: 18px 0 8px;
+  font-size: clamp(42px, 9vw, 82px);
+  line-height: .92;
+  letter-spacing: -2.8px;
+}
+
+.hero p {
+  max-width: 630px;
+  font-size: clamp(16px, 2.5vw, 21px);
+  line-height: 1.5;
+  margin: 0 0 26px;
+  color: rgba(255,255,255,.92);
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.primary-btn,
+.secondary-btn,
+.chip,
+.quiz,
+.small-btn,
+.roulette-btn,
+.light-btn,
+.ghost-btn,
+.choose-btn,
+.stat-card {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
+}
+
+.primary-btn,
+.ghost-btn {
+  width: fit-content;
+  padding: 15px 23px;
+  border-radius: 18px;
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.primary-btn {
+  background: white;
+  color: var(--green);
+  box-shadow: 0 10px 25px rgba(0,0,0,.17);
+}
+
+.ghost-btn {
+  background: rgba(255,255,255,.15);
+  color: white;
+  border: 1px solid rgba(255,255,255,.22);
+}
+
+.primary-btn:hover,
+.secondary-btn:hover,
+.chip:hover,
+.quiz:hover,
+.small-btn:hover,
+.roulette-btn:hover,
+.light-btn:hover,
+.ghost-btn:hover,
+.choose-btn:hover,
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 18px 0 0;
+}
+
+.stat-card {
+  background: rgba(255,255,255,.88);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 16px;
+  box-shadow: 0 10px 22px rgba(0, 44, 37, .06);
+  text-align: left;
+}
+
+.stat-card strong,
+.stat-card span {
+  display: block;
+}
+
+.stat-card strong {
+  color: var(--green);
+  font-size: 22px;
+}
+
+.stat-card span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.roulette-link {
+  background: #fff;
+}
+
+.principal-banner {
+  margin: 22px 0 8px;
+  padding: 18px;
+  border-radius: 30px;
+  background:
+    linear-gradient(135deg, rgba(0,75,63,.98), rgba(15,107,92,.90)),
+    radial-gradient(circle at top right, rgba(255,255,255,.12), transparent 32%);
+  color: white;
+  box-shadow: 0 18px 45px rgba(0, 44, 37, 0.18);
+}
+
+.principal-header {
+  margin-bottom: 14px;
+}
+
+.principal-label {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.22);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+}
+
+.principal-header h2 {
+  margin: 12px 0 6px;
+  color: white;
+  font-size: clamp(26px, 4vw, 40px);
+}
+
+.principal-header p {
+  margin: 0;
+  max-width: 760px;
+  color: rgba(255,255,255,.88);
+  line-height: 1.5;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 20px 2px 12px;
+  scrollbar-width: none;
+}
+
+.filters::-webkit-scrollbar,
+.featured-restaurants::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  white-space: nowrap;
+  padding: 11px 16px;
+  border-radius: 999px;
+  background: white;
+  color: var(--green);
+  border: 1px solid var(--line);
+  font-weight: 700;
+}
+
+.chip.active {
+  background: var(--green);
+  color: white;
+}
+
+.roulette-box,
+.question-card,
+.selected-card,
+.final-card {
+  background: rgba(255,255,255,.88);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  padding: 22px;
+  margin: 18px 0;
+  box-shadow: 0 12px 28px rgba(0, 44, 37, .08);
+}
+
+.roulette-box {
+  scroll-margin-top: 18px;
+}
+
+.roulette-head h2,
+.question-card h2,
+.selected-card h2,
+.final-card h2 {
+  margin: 0;
+  color: var(--green);
+  font-size: clamp(28px, 5vw, 44px);
+}
+
+.roulette-head p {
+  margin: 2px 0 18px;
+  color: var(--muted);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.roulette-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.roulette-btn,
+.light-btn {
+  padding: 14px 18px;
+  border-radius: 18px;
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.roulette-btn {
+  background: var(--green);
+  color: white;
+}
+
+.light-btn {
+  background: #f4fbf8;
+  color: var(--green);
+  border: 1px solid #cce6df;
+}
+
+.roulette-help {
+  display: block;
+  margin-top: 10px;
+  color: var(--muted);
+}
+
+.quiz-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.quiz {
+  border-radius: 18px;
+  padding: 14px 10px;
+  background: #f4fbf8;
+  border: 1px solid #cce6df;
+  color: var(--green);
+  font-weight: 800;
+}
+
+.quiz-result {
+  margin: 14px 0 0;
+  color: var(--muted);
+}
+
+.selected-card.hidden,
+.modal-backdrop.hidden {
+  display: none;
+}
+
+.mini-title {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+#selectedText {
+  margin-top: 8px;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.result-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: var(--green);
+  color: white;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.link-btn {
+  background: #eef8f5;
+  color: var(--green);
+  border: 1px solid #cce6df;
+}
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.toolbar input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 14px 16px;
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+  background: rgba(255,255,255,.92);
+}
+
+.toolbar input:focus {
+  border-color: #8fcabd;
+  box-shadow: 0 0 0 4px rgba(15, 107, 92, .10);
+}
+
+.small-btn {
+  border-radius: 18px;
+  padding: 12px 14px;
+  background: #eef8f5;
+  color: var(--green);
+  border: 1px solid #cce6df;
+  font-weight: 800;
+}
+
+.restaurants {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.featured-restaurants {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 8px 2px 4px;
+  scrollbar-width: none;
+  margin-top: 8px;
+}
+
+.featured-restaurants .card {
+  min-width: 290px;
+  max-width: 320px;
+  flex: 0 0 auto;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(0,75,63,.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.card.featured {
+  border: 2px solid rgba(255,255,255,.22);
+  position: relative;
+}
+
+.card.featured::before {
+  content: "Principal";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  background: #fff;
+  color: var(--green);
+  border-radius: 999px;
+  padding: 7px 10px;
+  font-size: 11px;
+  font-weight: 800;
+  box-shadow: 0 8px 18px rgba(0,0,0,.16);
+}
+
+.card.selected-card {
+  outline: 3px solid #0f6b5c;
+  outline-offset: 3px;
+}
+
+.card-img {
+  height: 165px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.level-pill {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  background: rgba(255,255,255,.92);
+  color: var(--green);
+  border-radius: 999px;
+  padding: 7px 10px;
+  font-size: 12px;
+  font-weight: 800;
+  box-shadow: 0 6px 18px rgba(0,0,0,.12);
+}
+
+.card-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 23px;
+  color: var(--text);
+}
+
+.meta {
+  color: var(--green-2);
+  font-weight: 700;
+  margin: 7px 0 10px;
+}
+
+.description {
+  color: #4b5563;
+  line-height: 1.45;
+  margin: 0 0 14px;
+  flex: 1;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.tag {
+  font-size: 12px;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: #f4fbf8;
+  color: var(--green);
+  border: 1px solid #d5eee7;
+  font-weight: 700;
+}
+
+.choose-btn {
+  width: 100%;
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 16px;
+  background: var(--green);
+  color: white;
+  font-weight: 800;
+}
+
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 28px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.final-card {
+  text-align: center;
+  margin-top: 26px;
+}
+
+.final-card p {
+  margin-bottom: 0;
+  color: #4b5563;
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 21, 18, .62);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 999;
+}
+
+.modal-card {
+  width: min(620px, 100%);
+  background: white;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 26px 70px rgba(0,0,0,.28);
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,.92);
+  color: var(--green);
+  font-size: 26px;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.modal-image {
+  height: 240px;
+  background-size: cover;
+  background-position: center;
+}
+
+.modal-content {
+  padding: 22px;
+}
+
+.modal-kicker {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.modal-content h3 {
+  margin: 0;
+  color: var(--green);
+  font-size: clamp(28px, 5vw, 40px);
+}
+
+.modal-meta {
+  margin: 6px 0 10px;
+  color: var(--green-2);
+  font-weight: 700;
+}
+
+.modal-desc {
+  margin: 0;
+  color: #4b5563;
+  line-height: 1.55;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+@media (max-width: 850px) {
+  .restaurants {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .quiz-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .app {
+    padding: 14px 12px 34px;
+  }
+
+  .hero {
+    border-radius: 26px;
+    padding: 28px 20px;
+    min-height: 315px;
+  }
+
+  h1 {
+    letter-spacing: -1.8px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .principal-banner,
+  .roulette-box,
+  .question-card,
+  .selected-card,
+  .final-card {
+    border-radius: 24px;
+    padding: 18px;
+  }
+
+  .featured-restaurants .card {
+    min-width: 250px;
+  }
+
+  .toolbar {
+    flex-direction: column;
+  }
+
+  .restaurants {
+    grid-template-columns: 1fr;
+  }
+
+  .card-img {
+    height: 190px;
+  }
+
+  .modal-image {
+    height: 200px;
+  }
+
+  .modal-card {
+    border-radius: 24px;
+  }
+}
+</style>
+</head>
+<body>
+  <main class="app">
+    <section class="hero" id="heroBanner">
+      <div class="badge" id="heroBadge">Miraflores</div>
+      <h1 id="heroTitle">Donde comer?</h1>
+      <p id="heroDescription">Apostar es malo solo para el que pierde</p>
+      <div class="hero-actions">
+        <button id="surpriseBtn" class="primary-btn">Sorpréndeme</button>
+        <button id="goRouletteHero" class="ghost-btn">Usar ruleta</button>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat-card">
+        <strong id="countRestaurants">0</strong>
+        <span>opciones</span>
+      </div>
+      <div class="stat-card">
+        <strong>Miraflores</strong>
+        <span>lugar general</span>
+      </div>
+      <button class="stat-card roulette-link" id="goRouletteCard" type="button">
+        <strong>Ruleta</strong>
+        <span>Selecciona al azar</span>
+      </button>
+    </section>
+
+    <section class="principal-banner">
+      <div class="principal-header">
+        <span class="principal-label">PRINCIPALES</span>
+        <h2>Opciones recomendadas por Scarlett o Yo </h2>
+      </div>
+      <section class="restaurants featured-restaurants" id="featuredList" aria-label="Opciones principales"></section>
+    </section>
+
+    <section class="filters" aria-label="Filtros de restaurantes">
+      <button class="chip active" data-filter="todos">Todos</button>
+      <button class="chip" data-filter="date">Plan bonito</button>
+      <button class="chip" data-filter="casual">Casual</button>
+      <button class="chip" data-filter="antojito">Antojito</button>
+      <button class="chip" data-filter="postre">Postre / Café</button>
+      <button class="chip" data-filter="pizza">Pizza</button>
+      <button class="chip" data-filter="sushi">Sushi</button>
+      <button class="chip" data-filter="foodhall">Food Hall</button>
+      <button class="chip" data-filter="foodcourt">Food Court</button>
+    </section>
+
+    <section class="roulette-box" id="rouletteSection">
+      <div class="roulette-head">
+        <h2>Ruleta</h2>
+      </div>
+      <div class="roulette-actions">
+        <button id="rouletteBtn" class="roulette-btn"> ruleta</button>
+        <button id="filteredRouletteBtn" class="light-btn">Usar filtro actual</button>
+      </div>
+    </section>
+
+    <section class="question-card">
+      <h2>¿mood?</h2>
+      <div class="quiz-grid">
+        <button class="quiz" data-mood="romantico">cute</button>
+        <button class="quiz" data-mood="hambre">hambre</button>
+        <button class="quiz" data-mood="picoteo">variadito</button>
+        <button class="quiz" data-mood="postre">postre</button>
+      </div>
+      <p id="quizResult" class="quiz-result">food by mood </p>
+    </section>
+
+    <section class="selected-card hidden" id="selectedCard">
+      <p class="mini-title">Plan elegido</p>
+      <h2 id="selectedName"></h2>
+      <p id="selectedText"></p>
+      <div class="result-actions">
+        <a id="mapsLink" class="secondary-btn link-btn" target="_blank" rel="noopener">Buscar en Maps</a>
+        <button id="openModalBtn" class="secondary-btn">Ver selección</button>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <input id="searchInput" type="search" placeholder="Buscar restaurante..." aria-label="Buscar restaurante">
+      <button id="clearSelection" class="small-btn">Limpiar selección</button>
+    </section>
+
+    <section class="restaurants" id="restaurantList" aria-label="Lista de restaurantes"></section>
+
+  </main>
+
+  <div class="modal-backdrop hidden" id="selectionModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="closeModal" aria-label="Cerrar modal">×</button>
+      <div class="modal-image" id="modalImage"></div>
+      <div class="modal-content">
+        <p class="modal-kicker">Selección confirmada</p>
+        <h3 id="modalTitle"></h3>
+        <p class="modal-meta" id="modalArea"></p>
+        <p class="modal-desc" id="modalDescription"></p>
+        <div class="modal-actions">
+          <a id="modalMaps" class="secondary-btn" target="_blank" rel="noopener">Ver en Maps</a>
+          <button id="modalContinue" class="light-btn">Seguir viendo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>const restaurants = [
+  {
+    name: "Saúl Crêpes",
+    featured: true,
+    area: "Nivel 2",
+    type: ["todos", "date", "postre"],
+    mood: ["romantico", "postre"],
+    img: "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=900&q=80",
+    desc: "Para plan tranquilo, café, crepas y conversación sin presión. Buena opción si quieren algo bonito y no tan pesado.",
+    tags: ["Cute", "Postre", "Café"]
+  },
+  {
+    name: "Café Saúl",
+    area: "Nivel 1",
+    type: ["todos", "date", "postre", "casual"],
+    mood: ["romantico", "postre", "hambre"],
+    img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=900&q=80",
+    desc: "Para quedar bien sin complicarse. Funciona para desayuno, almuerzo, cena o café.",
+    tags: ["Café", "Bonito", "Seguro"]
+  },
+  {
+    name: "San Martín Restaurante",
+    featured: true,
+    area: "Nivel 1",
+    type: ["todos", "casual", "date"],
+    mood: ["hambre", "romantico"],
+    img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80",
+    desc: "La opción segura cuando nadie se decide. Hay comida variada, ambiente familiar y casi siempre salva el plan.",
+    tags: ["Seguro", "Variado", "Casual"]
+  },
+  {
+    name: "Quinos",
+    featured: true,
+    area: "Nivel 2",
+    type: ["todos", "casual", "antojito", "pizza"],
+    mood: ["hambre", "picoteo"],
+    img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80",
+    desc: "Ideal si la misión es pizza y cero complicaciones. Perfecto para un plan con hambre de verdad.",
+    tags: ["Pizza", "Casual", "Compartir"]
+  },
+  {
+    name: "Roof Pong",
+    featured: true,
+    area: "Picoteo",
+    type: ["todos", "casual", "antojito"],
+    mood: ["picoteo"],
+    img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80",
+    desc: "Para un plan más relajado, de picar algo y no verse tan formal. Buen mood para romper el hielo.",
+    tags: ["Picoteo", "Relax", "Amigos"]
+  },
+  {
+    name: "Mr. Sushi",
+    featured: true,
+    area: "Food Court Nivel 2",
+    type: ["todos", "antojito", "casual", "sushi", "foodcourt"],
+    mood: ["picoteo", "hambre"],
+    img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=900&q=80",
+    desc: "Para quienes dicen “algo liviano” y luego piden medio menú. Buena opción si quieren sushi rápido.",
+    tags: ["Sushi", "Rápido", "Antojo"]
+  },
+  {
+    name: "Naru",
+    featured: true,
+    area: "Food Hall Nivel 3",
+    type: ["todos", "foodhall", "date", "sushi"],
+    mood: ["romantico", "hambre"],
+    img: "https://images.unsplash.com/photo-1611143669185-af224c5e3252?auto=format&fit=crop&w=900&q=80",
+    desc: "Opción japonesa con vibra más especial. Buena para un plan donde sí quieres quedar bien.",
+    tags: ["Japonesa", "Food Hall", "Plan bonito"]
+  },
+  {
+    name: "Antigua Boreal",
+    featured: true,
+    area: "Food Hall Nivel 3",
+    type: ["todos", "foodhall", "casual"],
+    mood: ["hambre", "picoteo"],
+    img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80",
+    desc: "Plan de comida casual para compartir y pasarla bien. Buena opción si van con hambre y buena actitud.",
+    tags: ["Food Hall", "Compartir", "Casual"]
+  },
+  {
+    name: "BBQ Bros",
+    area: "Food Hall Nivel 3",
+    type: ["todos", "foodhall", "casual", "antojito"],
+    mood: ["hambre", "picoteo"],
+    img: "https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=900&q=80",
+    desc: "Para cuando quieren carne, BBQ y algo más contundente. No es para fingir que solo tenían antojito.",
+    tags: ["BBQ", "Fuerte", "Food Hall"]
+  },
+  {
+    name: "18-90 Bowling",
+    area: "Food Hall Nivel 3",
+    type: ["todos", "foodhall", "casual"],
+    mood: ["picoteo", "hambre"],
+    img: "https://images.unsplash.com/photo-1538511059256-46e7b1d6a0ef?auto=format&fit=crop&w=900&q=80",
+    desc: "Para comer algo y sumar actividad. Ideal si no quieren que todo el plan sea solo sentarse a comer.",
+    tags: ["Actividad", "Bowling", "Casual"]
+  },
+  {
+    name: "Domino's",
+    area: "Food Court Nivel 3",
+    type: ["todos", "foodcourt", "casual", "pizza"],
+    mood: ["hambre", "picoteo"],
+    img: "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=900&q=80",
+    desc: "Cuando quieren pizza rápida y sin debate. Opción práctica para compartir.",
+    tags: ["Pizza", "Rápido", "Food Court"]
+  },
+  {
+    name: "Dudes Pizzeria",
+    area: "Food Court",
+    type: ["todos", "foodcourt", "casual", "pizza"],
+    mood: ["hambre", "picoteo"],
+    img: "https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&w=900&q=80",
+    desc: "Pizza para plan casual y cero formalidad. Buena opción si el mood es comer y seguir caminando.",
+    tags: ["Pizza", "Casual", "Antojo"]
+  },
+  {
+    name: "Burger King",
+    area: "Food Court Nivel 2",
+    type: ["todos", "foodcourt", "casual", "antojito"],
+    mood: ["hambre"],
+    img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=80",
+    desc: "La vieja confiable si quieren algo rápido, conocido y directo al punto.",
+    tags: ["Hamburguesa", "Rápido", "Food Court"]
+  },
+  {
+    name: "& Café",
+    area: "Nivel 1",
+    type: ["todos", "postre", "date", "casual"],
+    mood: ["postre", "romantico"],
+    img: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80",
+    desc: "Para café, plática y algo dulce. Perfecto si el plan es más tranqui que cena completa.",
+    tags: ["Café", "Postre", "Tranqui"]
+  }
+];
+
+const list = document.getElementById("restaurantList");
+const featuredList = document.getElementById("featuredList");
+const chips = document.querySelectorAll(".chip");
+const quizResult = document.getElementById("quizResult");
+const searchInput = document.getElementById("searchInput");
+const countRestaurants = document.getElementById("countRestaurants");
+
+const heroBanner = document.getElementById("heroBanner");
+const heroBadge = document.getElementById("heroBadge");
+const heroTitle = document.getElementById("heroTitle");
+const heroDescription = document.getElementById("heroDescription");
+
+const selectedCard = document.getElementById("selectedCard");
+const selectedName = document.getElementById("selectedName");
+const selectedText = document.getElementById("selectedText");
+const mapsLink = document.getElementById("mapsLink");
+const openModalBtn = document.getElementById("openModalBtn");
+
+const modal = document.getElementById("selectionModal");
+const modalImage = document.getElementById("modalImage");
+const modalTitle = document.getElementById("modalTitle");
+const modalArea = document.getElementById("modalArea");
+const modalDescription = document.getElementById("modalDescription");
+const modalMaps = document.getElementById("modalMaps");
+
+let currentFilter = "todos";
+let searchTerm = "";
+let selectedRestaurant = localStorage.getItem("selectedRestaurant") || "";
+const defaultHeroImage = 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1300&q=80';
+
+function getFilteredRestaurants() {
+  return restaurants.filter(r => {
+    const byFilter = r.type.includes(currentFilter);
+    const haystack = `${r.name} ${r.area} ${r.tags.join(" ")}`.toLowerCase();
+    const bySearch = haystack.includes(searchTerm);
+    return byFilter && bySearch;
+  });
+}
+
+function cardTemplate(r, isFeatured = false) {
+  const selectedClass = selectedRestaurant === r.name ? "selected-card" : "";
+  return `
+    <article class="card ${isFeatured ? "featured" : ""} ${selectedClass}" data-name="${r.name}">
+      <div class="card-img" style="background-image: url('${r.img}')">
+        <span class="level-pill">${r.area}</span>
+      </div>
+      <div class="card-body">
+        <h3>${r.name}</h3>
+        <p class="meta">Gastronomía · ${r.area}</p>
+        <p class="description">${r.desc}</p>
+        <div class="tags">${r.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+        <button class="choose-btn" onclick="selectRestaurant('${r.name.replaceAll("'", "\\'")}', true)">Elegir este plan</button>
+      </div>
+    </article>
+  `;
+}
+
+function renderFeaturedRestaurants() {
+  const featured = restaurants.filter(r => r.featured);
+  featuredList.innerHTML = featured.map(r => cardTemplate(r, true)).join("");
+}
+
+function renderRestaurants() {
+  const filtered = getFilteredRestaurants();
+  countRestaurants.textContent = restaurants.length;
+
+  if (!filtered.length) {
+    list.innerHTML = `<div class="empty">No encontré opciones con ese filtro. La ruleta está confundida, pero no derrotada.</div>`;
+    return;
+  }
+
+  list.innerHTML = filtered.map(r => cardTemplate(r)).join("");
+}
+
+function updateHero(restaurant) {
+  heroBanner.style.setProperty("--hero-image", `url('${restaurant.img}')`);
+  heroBanner.classList.add("plan-selected");
+  heroBadge.textContent = `📍 Miraflores · ${restaurant.area}`;
+  heroTitle.textContent = restaurant.name;
+  heroDescription.textContent = restaurant.desc;
+}
+
+function resetHero() {
+  heroBanner.style.setProperty("--hero-image", `url('${defaultHeroImage}')`);
+  heroBanner.classList.remove("plan-selected");
+  heroBadge.textContent = "📍 Miraflores";
+  heroTitle.textContent = "Where to Date?";
+  heroDescription.textContent = "Elige el mood y deja que la ruleta decida dónde comer sin pasar 40 minutos diciendo “no sé, tú dime”.";
+}
+
+function updateSelectedCard(restaurant) {
+  selectedName.textContent = restaurant.name;
+  selectedText.textContent = `${restaurant.desc} Ubicación: Miraflores, ${restaurant.area}.`;
+  mapsLink.href = `https://www.google.com/maps/search/${encodeURIComponent(restaurant.name + " Miraflores Guatemala")}`;
+  modalMaps.href = mapsLink.href;
+  selectedCard.classList.remove("hidden");
+}
+
+function openSelectionModal(restaurant) {
+  modalImage.style.backgroundImage = `url('${restaurant.img}')`;
+  modalTitle.textContent = restaurant.name;
+  modalArea.textContent = `Miraflores · ${restaurant.area}`;
+  modalDescription.textContent = restaurant.desc;
+  modalMaps.href = `https://www.google.com/maps/search/${encodeURIComponent(restaurant.name + " Miraflores Guatemala")}`;
+  modal.classList.remove("hidden");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+}
+
+function closeSelectionModal() {
+  modal.classList.add("hidden");
+  modal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("modal-open");
+}
+
+function selectRestaurant(name, shouldScroll = false) {
+  const selected = restaurants.find(r => r.name === name);
+  if (!selected) return;
+
+  selectedRestaurant = selected.name;
+  localStorage.setItem("selectedRestaurant", selected.name);
+
+  updateHero(selected);
+  updateSelectedCard(selected);
+  renderFeaturedRestaurants();
+  renderRestaurants();
+  openSelectionModal(selected);
+
+  if (shouldScroll) {
+    heroBanner.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+function pickRestaurant(pool = getFilteredRestaurants()) {
+  if (!pool.length) return;
+  const selected = pool[Math.floor(Math.random() * pool.length)];
+  selectRestaurant(selected.name, false);
+}
+
+function restoreSelectedRestaurant() {
+  if (!selectedRestaurant) return;
+  const selected = restaurants.find(r => r.name === selectedRestaurant);
+  if (!selected) return;
+  updateHero(selected);
+  updateSelectedCard(selected);
+}
+
+chips.forEach(chip => {
+  chip.addEventListener("click", () => {
+    chips.forEach(c => c.classList.remove("active"));
+    chip.classList.add("active");
+    currentFilter = chip.dataset.filter;
+    renderRestaurants();
+  });
+});
+
+searchInput.addEventListener("input", e => {
+  searchTerm = e.target.value.trim().toLowerCase();
+  renderRestaurants();
+});
+
+document.getElementById("surpriseBtn").addEventListener("click", () => pickRestaurant(getFilteredRestaurants()));
+document.getElementById("rouletteBtn").addEventListener("click", () => pickRestaurant(restaurants));
+document.getElementById("filteredRouletteBtn").addEventListener("click", () => pickRestaurant(getFilteredRestaurants()));
+document.getElementById("goRouletteCard").addEventListener("click", () => {
+  document.getElementById("rouletteSection").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+document.getElementById("goRouletteHero").addEventListener("click", () => {
+  document.getElementById("rouletteSection").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+document.querySelectorAll(".quiz").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const mood = btn.dataset.mood;
+    const pool = restaurants.filter(r => r.mood.includes(mood));
+    if (!pool.length) return;
+    const selected = pool[Math.floor(Math.random() * pool.length)];
+    quizResult.textContent = `Para ese mood: ${selected.name}. ${selected.desc}`;
+    selectRestaurant(selected.name, false);
+  });
+});
+
+document.getElementById("clearSelection").addEventListener("click", () => {
+  selectedRestaurant = "";
+  localStorage.removeItem("selectedRestaurant");
+  resetHero();
+  selectedCard.classList.add("hidden");
+  renderFeaturedRestaurants();
+  renderRestaurants();
+});
+
+openModalBtn.addEventListener("click", () => {
+  const selected = restaurants.find(r => r.name === selectedRestaurant);
+  if (selected) openSelectionModal(selected);
+});
+
+document.getElementById("closeModal").addEventListener("click", closeSelectionModal);
+document.getElementById("modalContinue").addEventListener("click", closeSelectionModal);
+
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) closeSelectionModal();
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeSelectionModal();
+});
+
+renderFeaturedRestaurants();
+renderRestaurants();
+restoreSelectedRestaurant();
+</script>
+</body>
+</html>
